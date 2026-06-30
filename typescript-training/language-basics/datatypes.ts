@@ -107,6 +107,7 @@ function getAccountBalance() :number {
     console.log("Navigate to the account balance page");
     let accountBalance :number= 100000;
     return accountBalance;
+    // console.log(accountBalance);
 }
 
 //set => Set is a data type that represents a collection of unique values of any data type. 
