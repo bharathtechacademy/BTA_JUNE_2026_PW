@@ -14,7 +14,7 @@ const updatedMarks: number[] = [];
 console.log("Updated Marks:");
 
 // Loop through studentMarks array using normal for loop
-for (let i = 0; i < studentMarks.length; i++) {
+for (let i: number = 0; i < studentMarks.length; i++) {
 
     // Add 10 marks to each student without modifying original array
     updatedMarks[i] = studentMarks[i]! + 10;
