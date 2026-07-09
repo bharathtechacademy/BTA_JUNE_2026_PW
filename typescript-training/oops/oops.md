@@ -41,3 +41,23 @@ Object is all about a new instance of the class. ( i.e. New xerox copy of the cl
 let obj = new Employee(); // new -> new copy 
 console.log(obj.empId);
 obj.employeeAddress();
+
+
+## Constructor
+Constructor is a default method created by TypeScript. Every time we are going to create a new class, automatically TypeScript is going to add one default method inside the class called constructor.
+
+constructor(){
+
+}
+
+The constructor is going to help us to initialize all the properties of the class whenever we are going to create any object. 
+
+//Default constructor 
+    constructor(){
+
+    }
+
+//Parameterized Constructor 
+    constructor(empName : string){
+
+    }
