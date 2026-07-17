@@ -18,7 +18,7 @@ export class PdfUtil {
         const unit8Array = new Uint8Array(pdfBuffer);
 
         //Convert all the bytes collected in Uint8Array into a string. 
-        const pdfData = await new PDFParse(unit8Array);
+        const pdfData = new PDFParse(unit8Array);
         const pdfText = (await pdfData.getText()).text;
 
         return pdfText ;
