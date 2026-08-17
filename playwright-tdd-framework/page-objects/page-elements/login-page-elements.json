@@ -1,0 +1,5 @@
+{
+    "username":"//input[@id='username']",
+    "password":"//input[@id='password']",
+    "loginButton":"//button[@id='login-button']"
+}

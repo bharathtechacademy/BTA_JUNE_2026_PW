@@ -1,0 +1,21 @@
+{
+  "name": "playwright-training",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test1" : "npx playwright test tests/6-webactions-assertions/webactions1.spec.ts",
+    "test2" : "npx playwright test tests/6-webactions-assertions/webactions2.spec.ts",
+    "test3" : "npx playwright test tests/6-webactions-assertions/webactions3.spec.ts",
+    "test4" : "npx playwright test tests/6-webactions-assertions/webactions4.spec.ts",
+    "test5" : "npx playwright test tests/6-webactions-assertions/webactions5.spec.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.1"
+  }
+}
