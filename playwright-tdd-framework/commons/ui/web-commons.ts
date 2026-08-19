@@ -16,6 +16,32 @@ export class WebCommons {
         }
     }
 
+    //Locate the element by using generic locators
+    async locateElementByMethod(locator: string, role?: Parameters<Page['getByRole']>[0]): Promise<Locator> {
+        const values = locator.split('_');
+        const method = values[0];
+        const value = values[1];
+
+        if (method === 'getByRole') {
+            if (!role) {
+                throw new Error('Role is required for getByRole locator method.');
+            }
+            return this.page.getByRole(role, { name: value ?? '' });
+        }else if (method === 'getByText') {
+            return this.page.getByText(value ?? '');
+        } else if (method === 'getByLabel') {
+            return this.page.getByLabel(value ?? '');
+        } else if (method === 'getByPlaceholder') {
+            return this.page.getByPlaceholder(value ?? '');
+        } else if (method === 'getByAltText') {
+            return this.page.getByAltText(value ?? '');
+        } else if (method === 'getByTitle') {
+            return this.page.getByTitle(value ?? '');   
+        } 
+
+        throw new Error(`Unsupported locator method: ${method}`);
+    }
+
     //Generate Web Element from the Locator. 
     async element(locator: string): Promise<Locator> {
         return this.page.locator(locator);
@@ -79,10 +105,10 @@ export class WebCommons {
     }
 
     //Get the text from the web element. 
-    async getText(locator: string): Promise<string|null> {
+    async getText(locator: string): Promise<string> {
         const element = await this.element(locator);
         await this.scrollToElement(locator);
-        return await element.textContent();
+        return (await element.textContent()) || "";
     }
 
     //Get the attribute value from the web element.
@@ -95,7 +121,7 @@ export class WebCommons {
     //Method to verify the element is visible 
     async isElementVisible(locator: string): Promise<void> {
         const element = await this.element(locator);
-        await expect(element).toBeVisible({ timeout: 30000 });
+        await expect(element).toBeVisible({timeout: 30000});
     }
 
     //Method to verify element is disappeared 
@@ -159,4 +185,8 @@ export class WebCommons {
         await expect(actualValue).toContain(expectedValue);
     }
 
+    //Method to verify expected Value contains actual value.
+    async compareText(actualValue: string, expectedValue: string) {
+        await expect(actualValue.trim()).toContain(expectedValue);
+    }
 }

@@ -10,6 +10,8 @@ interface CommonMethods1 {
 
 interface CommonMethods2 {
 
+    //name: string = "Bharath"; //An interface property cannot have an initializer.
+
     navigateToApplication(): void;
 
     closeTheApplication(): void;

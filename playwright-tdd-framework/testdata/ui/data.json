@@ -1,0 +1,19 @@
+{
+    "Verify cookies pop-up content" :{
+        "content" : "We may use cookies and similar technologies to collect information about the ways you interact with and use the website, to support and enhance features and functionality, to monitor performance, to personalize content and experiences, for marketing and analytics, and for other lawful purposes"
+    },
+    "Verify Login functionality with valid credentials" :{
+        "username" : "bharattechacademy5@outlook.com",
+        "password" : "BharathTechAcademy#1234"
+    },
+    "Verify Login functionality with invalid credentials" : [
+        {
+        "username" : "invalid1@outlook.com",
+        "password" : "Invalid#1234"
+        },
+        {
+        "username" : "invalid2@outlook.com",
+        "password" : "Invalid#1234"
+        }
+    ]
+}
