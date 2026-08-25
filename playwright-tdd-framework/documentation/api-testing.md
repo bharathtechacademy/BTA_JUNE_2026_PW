@@ -227,3 +227,36 @@ Response :
 Ex: Max response time is 2 seconds for each and every request up to 10,000 users. 
 
 6. Error Handling : For each and every mistake made by the user while sending the request, what kind of error message or what kind of API response can we expect from the server? 
+
+
+# How to use the Postman tool? (Step By Step)
+
+Step 1 : Create a local workspace within the Postman tool. 
+Workspace is all about the space where we are going to maintain multiple API collections. 
+
+Step 2 : Create new environment. 
+Environment is all about a template that is going to allow us to store all the common data. 
+
+- Collection variables => Collection variables can be accessed only within the collection. 
+- Global variables => Global variables can be accessed across the workspace in each and every API collection. 
+- Environment variables => Environment variables can be accessed in any API collection by selecting a specific environment. 
+
+Step 3 : Create new API collection. 
+API collection is a combination of multiple API requests stored together in a folder. 
+
+Step 4 : Add each and every API request within the API collection. 
+Meaning, we are going to add the API request details within the API collection to test. 
+
+## Git API collection 
+
+URL : https://docs.github.com/en/rest/repos/repos?apiVersion=2026-03-10
+
+Git API Token URL : https://github.com/settings/tokens
+
+## Scenarios to be tested by using API 
+
+1. Creating a duplicate repository with valid credentials. 
+2. Create a valid repository with valid credentials. 
+3. Update the existing repository with valid credentials. 
+4. Search and get existing repository with valid details. 
+5. Delete the existing repository with valid credentials. 
