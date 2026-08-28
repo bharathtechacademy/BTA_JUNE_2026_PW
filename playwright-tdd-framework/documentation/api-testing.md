@@ -260,3 +260,42 @@ Git API Token URL : https://github.com/settings/tokens
 3. Update the existing repository with valid credentials. 
 4. Search and get existing repository with valid details. 
 5. Delete the existing repository with valid credentials. 
+
+## Scripts
+
+Pre-Request : The JavaScript code that we are going to write to run before sending the request 
+
+Post-Response : The code that we are going to write to run after getting the response from the server 
+
+
+# Sample Postman scripts
+
+//Verify the status code of the duplicate repository request. 
+pm.test("Verify Status Code", function (){
+    pm.expect(pm.response.code).to.eql(422);
+})
+
+//Verify the status message of the duplicate repository request. 
+pm.test("Verify Status message", function (){
+    pm.expect(pm.response.status).to.include("Unprocessable Entity");
+})
+
+//Verify the response time of the duplicate repository request. 
+pm.test("Verify Response Time", function (){
+    pm.expect(pm.response.responseTime).to.be.below(2000);
+})
+
+//Verify the response body of the duplicate repository request. 
+pm.test("Verify Response Body", function (){
+    pm.expect(pm.response.json().message).to.eql("Repository creation failed.");
+    pm.expect(pm.response.json().errors[0].message).to.eql("name already exists on this account");
+})
+
+## newman integration commands
+
+### installation
+1. npm install newman   
+2. npm install -g newman-reporter-htmlextra         
+
+### Execution
+newman run collection.json -e env.json -r htmlextra    
