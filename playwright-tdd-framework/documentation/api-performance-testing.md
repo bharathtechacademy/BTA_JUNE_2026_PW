@@ -70,3 +70,51 @@ start next thread loop => Stop current iteration and start the next loop.
 stop thread => Stop the entire thread for the current user. 
 stop test => Stop the entire test and close it. 
 
+4. Thread Properties :
+
+=> Number of Threads or Users : Totally, how many virtual users do you want to create and deploy to test your application? 
+
+Example : 100 ( 100 virtual users I want to create to test my application performance )
+
+
+==> Ramp-up Period (in seconds) : Total duration that we are going to use to deploy all the users 
+
+Example : 10 Sec ( All the 100 users, now I want to deploy within the span of 10 seconds. )
+
+=> Loop Count : Total number of iterations to be executed to repeat the process 
+Example : 2 Loops ( 100 users in 10 seconds. We want to deploy for 2 times. )
+
+=> Same user on each iteration : The same session our user will be reused to run all the API requests. 
+
+==> Delay Thread Creation Until Needed : During the execution process, don't create virtual users until we want to trigger and send the API request. 
+=> Specify Thread Lifetime (Duration) : Duration is all about the total amount of time that you want to run this API request by using JMETER. 
+
+=> Statup delay => Delay before each and every API request begins. For example, if Im going to add 2 seconds, then automatically, after 2 seconds only, it is going to deploy the user and send the API request. 
+
+# Configuration elements available in JMETER ?
+Configuration elements are all about a set of templates, which we are going to use to maintain the test data, configuration data, or environment data while sending the API request through JMETER. 
+
+Example : User-defined variables, HTTP header manager, etc. 
+
+User-defined variables => We are going to use these user-defined variables as a template to maintain the environment variables, which we can reuse across each and every API request that we are sending. 
+
+ HTTP header manager => To maintain the authorization token and other header values for each and every API request that we are sending 
+
+ # Samplers in JMETER ?
+
+Samplers are all about the request that we are going to send through JMETER to validate the performance. 
+
+=> HTTP Request Sampler will be used for API performance testing. 
+
+# Assertions in JMETER ?
+Assertions are all about default JMETER methods helping us to validate the API response with respect to the expected result. 
+
+Assertions are very helpful to ensure the correctness of each and every API request. It is going to catch the failure and report that particular information to the user. 
+
+
+# Listeners in JMETER ?
+Listeners are a set of components in JMETER that can record the test results related to each and every performance metric. 
+
+View Results Tree => This listener is going to help us to capture each and every API request and response details. 
+Summary Report => This listener is going to capture the response time and error details for each and every API request. Finally, it is going to provide you the average response time. That means what is the minimum, what is the maximum, and what is the average time it is taking to send all the requests. 
+Assertion results => Assertion results are all about validating each and every assertion that we have added within the HTTP request. 

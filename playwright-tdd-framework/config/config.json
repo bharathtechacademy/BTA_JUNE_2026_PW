@@ -9,5 +9,12 @@
         "user" : "postgres",
         "password" : "admin",
         "database" : "postgres"
+    },
+    "api" : {
+       "base_url":"https://api.github.com",
+       "token":"Bearer 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",
+       "owner":"bharathtechacademy05"
     }
+
+    
 }

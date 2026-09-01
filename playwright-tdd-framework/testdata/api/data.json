@@ -1,0 +1,28 @@
+{
+    "duplicateRepo":{
+        "requestType":"POST",
+        "endpoint":"/user/repos",
+        "payload":{
+            "name": "JmeterRepo",
+            "description": "Sample Duplicate Repo From Postman",
+            "private": true
+        },
+        "expCode": 422,
+        "expMessage": "Unprocessable Entity",
+        "expError": "Repository creation failed.",
+        "expDataType": "string"
+    },   
+    "validRepo":{
+        "requestType":"POST",
+        "endpoint":"/user/repos",
+        "payload":{
+            "name": "JmeterRepo1",
+            "description": "Sample Valid Repo From Postman",
+            "private": true
+        },
+        "expCode": 201,
+        "expMessage": "Created",
+        "name": "JmeterRepo1",
+        "expDataType": "string"
+    }
+}
