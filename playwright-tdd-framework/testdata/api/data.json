@@ -24,5 +24,32 @@
         "expMessage": "Created",
         "name": "JmeterRepo1",
         "expDataType": "string"
-    }
+    },
+    "getRepo":{
+        "requestType":"GET",
+        "endpoint":"/repos/bharathtechacademy05/JmeterRepo1",
+        "payload":{},
+        "expCode": 200,
+        "expMessage": "OK",
+        "name": "JmeterRepo1",
+        "expDataType": "string"
+    },
+    "updateRepo": {
+        "requestType":"PATCH",
+        "endpoint":"/repos/bharathtechacademy05/JmeterRepo1",
+        "payload":{
+            "description": "New Description for JmeterRepo1"  
+        },
+        "expCode": 200,
+        "expMessage": "OK",
+        "description": "New Description for JmeterRepo1",
+        "expDataType": "string"
+    },
+    "deleteRepo": {
+        "requestType":"DELETE",
+        "endpoint":"/repos/bharathtechacademy05/JmeterRepo1",
+        "payload":{},
+        "expCode": 204,
+        "expMessage": "No Content"
+    }   
 }

@@ -51,35 +51,42 @@ export class APICommons {
                 throw new Error(`Unsupported request type entered by the user : ${requestType}`)
 
         }
+
+        //wait for 2 sec and print response body in the console for debugging purpose.
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        if (requestType !== 'delete') {
+            console.log(await this.response.json());
+        }
     }
 
     //Common method to validate the status code 
-    async validateStatusCode(expCode :number){
+    async validateStatusCode(expCode: number) {
+
         const actualCode = await this.response.status();
         await expect(actualCode).toBe(expCode);
     }
 
     //Common method to validate the status message 
-    async validateStatusMessage(expMessage :string){
+    async validateStatusMessage(expMessage: string) {
         const actualMessage = await this.response.statusText();
         await expect(actualMessage).toBe(expMessage);
     }
 
     //Common method to validate the response body
-    async validateResponseBody(key :string , expValue :any){
+    async validateResponseBody(key: string, expValue: any) {
         const responseBody = await this.response.json();
         const actualValue = responseBody[key];
         await expect(actualValue).toBe(expValue);
     }
     //Common method to validate the response headers
-    async validateResponseHeaders(key :string , expValue :any){
+    async validateResponseHeaders(key: string, expValue: any) {
         const responseHeaders = await this.response.headers();
         const actualValue = responseHeaders[key];
         await expect(actualValue).toBe(expValue);
     }
 
     //Common method to validate the response schema 
-    async validateResponseSchema(key :string, expDataType :string){
+    async validateResponseSchema(key: string, expDataType: string) {
         const responseBody = await this.response.json();
         const actualValue = responseBody[key];
         const actualDatatype = typeof actualValue;
