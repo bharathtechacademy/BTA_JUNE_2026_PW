@@ -1,0 +1,23 @@
+{
+    "app":{
+        "url":"https://accounts.creatio.com/login/alm",
+        "title":"Log in | Creatio",
+        "username":"bharattechacademy5@outlook.com",
+        "password":"BharathTechAcademy#1234"
+    },
+    "api":{
+        "base_url":"https://api.github.com",
+        "owner":"bharathtechacademy05",   
+        "token":"Bearer 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"
+
+    },"db":{
+        "host":"localhost",
+        "port":3306,
+        "username":"root",
+        "password":"root"
+    }, "ollama":{
+        "base_url":"http://localhost:11434",
+        "model":"llama2-7b-chat",
+        "timeout":30000
+    }
+}
