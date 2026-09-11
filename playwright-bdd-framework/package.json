@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "cookies": "npx cucumber-js features/ui/cookies-page.feature",
+    "parallel": "npx cucumber-js --parallel 4",
+    "smoke": "npx cucumber-js --tags @smoke",
+    "regression": "npx cucumber-js --tags @regression"
+    
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
