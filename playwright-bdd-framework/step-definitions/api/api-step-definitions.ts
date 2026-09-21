@@ -10,11 +10,18 @@ Given('API request context is initialized', async function () {
     await api.InitializeRequestContext();
 });
 
-// When I send a "POST" request with the endpoint "/user/repos"to create a duplicate repository with the name "JmeterRepo" and description "This is a duplicate repository"
 When('I send a {string} request with the endpoint {string} to create a duplicate repository with the name {string} and description {string}', async function (requestType, endpoint, repoName, repoDescription) {
     let requestBody = data.createRepo.body;
     requestBody.name = repoName;
-    requestBody.description = repoDescription;    
+    requestBody.description = repoDescription;
+    await api.getResponse(requestType, endpoint, requestBody);
+});
+
+// When I send a "POST" request with the endpoint "/user/repos"to create a duplicate repository with the name "JmeterRepo" and description "This is a duplicate repository"
+When('I send a {string} request with the endpoint {string} to create a valid repository with the name {string} and description {string}', async function (requestType, endpoint, repoName, repoDescription) {
+    let requestBody = data.createRepo.body;
+    requestBody.name = repoName;
+    requestBody.description = repoDescription;
     await api.getResponse(requestType, endpoint, requestBody);
 });
 
@@ -32,3 +39,17 @@ Then('I should receive a response with a status message {string}', async functio
 Then('I should receive a response with a body having {string} as {string}', async function (key, value) {
     await api.validateResponseBody(key, value);
 });
+
+//  When I send a "PATCH" request with endpoint "/repos/bharathtechacademy05/JmeterRepo10" to update the repository description as "This is an updated repository"
+When('I send a {string} request with endpoint {string} to update the repository description as {string}', async function (requestType, endpoint, repoDescription) {
+    let requestBody = data.updateRepo.body;
+    requestBody.description = repoDescription;
+    await api.getResponse(requestType, endpoint, requestBody);
+});
+
+// When I send a "GET" request with endpoint "/repos/bharathtechacademy05/JmeterRepo10"
+When('I send a {string} request with endpoint {string}', async function (requestType, endpoint) {
+    await api.getResponse(requestType, endpoint);
+});
+
+

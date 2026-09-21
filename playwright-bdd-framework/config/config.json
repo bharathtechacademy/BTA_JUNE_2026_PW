@@ -8,7 +8,7 @@
     "api":{
         "base_url":"https://api.github.com",
         "owner":"bharathtechacademy05",   
-        "token":"Bearer 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"
+        "token":"Bearer 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"
 
     },"db":{
         "host":"localhost",

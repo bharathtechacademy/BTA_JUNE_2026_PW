@@ -1,0 +1,26 @@
+{
+  "name": "playwright-test-project",
+  "version": "1.0.0",
+  "description": "Enterprise-level Playwright automation framework",
+  "type": "module",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:dev": "cross-env ENV=dev npx playwright test",
+    "test:stage": "cross-env ENV=stage npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "codegen": "npx playwright codegen"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "pdf-parse-new": "^2.1.0",
+    "pg": "^8.23.0",
+    "@types/pg": "^8.21.0",
+    "xlsx": "^0.18.5"
+  }
+}

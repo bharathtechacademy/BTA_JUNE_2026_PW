@@ -1,0 +1,50 @@
+{
+  "Total" : {
+    "transaction" : "Total",
+    "sampleCount" : 400,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 492.10250000000025,
+    "medianResTime" : 452.0,
+    "minResTime" : 339.0,
+    "maxResTime" : 1500.0,
+    "pct1ResTime" : 638.8000000000001,
+    "pct2ResTime" : 768.6999999999999,
+    "pct3ResTime" : 1011.3900000000006,
+    "throughput" : 34.530386740331494,
+    "receivedKBytesPerSec" : 271.0435561712276,
+    "sentKBytesPerSec" : 11.5326096339779
+  },
+  "Request to update the existing repository details with valid credentials" : {
+    "transaction" : "Request to update the existing repository details with valid credentials",
+    "sampleCount" : 200,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 515.2750000000002,
+    "medianResTime" : 480.5,
+    "minResTime" : 401.0,
+    "maxResTime" : 943.0,
+    "pct1ResTime" : 669.4000000000001,
+    "pct2ResTime" : 761.9999999999998,
+    "pct3ResTime" : 860.8600000000001,
+    "throughput" : 18.81821603312006,
+    "receivedKBytesPerSec" : 149.46818324825932,
+    "sentKBytesPerSec" : 7.258979817463304
+  },
+  "Request to get the existing repository details with valid credentials" : {
+    "transaction" : "Request to get the existing repository details with valid credentials",
+    "sampleCount" : 200,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 468.9300000000001,
+    "medianResTime" : 421.0,
+    "minResTime" : 339.0,
+    "maxResTime" : 1500.0,
+    "pct1ResTime" : 591.7,
+    "pct2ResTime" : 798.4499999999998,
+    "pct3ResTime" : 1412.96,
+    "throughput" : 17.98237727027513,
+    "receivedKBytesPerSec" : 139.47317956527604,
+    "sentKBytesPerSec" : 5.075104522567884
+  }
+}

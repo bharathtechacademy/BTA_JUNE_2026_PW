@@ -9,7 +9,7 @@
 2. **Playwright** — `npm init playwright@latest` (or add `@playwright/test`) for web / API automation with the Playwright.
 3. **PostgreSQL** — `npm install pg @types/pg` to connect to a database and perform db validations
 4. **Excel** — `npm install excel xlsx` to read or work with spreadsheet data.
-5. **PDF** — `npm install pdf-parse` and (in this project) `pdf-parse-new` for PDF utilities.
+5. **PDF** — `npm install pdf-parse-new` for PDF utilities.
 
 ## 3. Update the global configurations at project level within the package.json and tsconfig.json. 
  * package.json  => "type": "module"   //to import data/functions from other files
