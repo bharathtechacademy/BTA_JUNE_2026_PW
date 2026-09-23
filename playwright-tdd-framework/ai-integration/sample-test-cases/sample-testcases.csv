@@ -1,0 +1,12 @@
+Key,Name,Status,Precondition,Objective,Folder,Priority,Component,Labels,Owner,Estimated Time,Coverage (Issues),Coverage (Pages),Test Script (Step-by-Step) - Step,Test Script (Step-by-Step) - Test Data,Test Script (Step-by-Step) - Expected Result,Test Script (Plain Text),Test Script (BDD)
+CRM-T1,Verify the cookies consent pop-up is displayed,Draft,,,,Normal,,,712020:05d2cd23-8934-4ec4-9aea-be80da7b90af,,CRM-10,,Launch the Chrome browser. ,,Chrome browser should be launched successfully. ,,
+,,,,,,,,,,,,,"Enter URL - https://accounts.creatio.com/login/alm and Navigate to the 
+creatio application. ",,User should be able to navigate to the Creatio application. ,,
+,,,,,,,,,,,,,Verify the cookies consent pop-up is getting displayed. ,,Cookies consent pop-up should be displayed successfully. ,,
+CRM-T10,Verify expanded view of cookies pop-up,Draft,,,,Normal,,,712020:05d2cd23-8934-4ec4-9aea-be80da7b90af,,,,Launch the Chrome browser. ,,Chrome browser should be launched successfully. ,,
+,,,,,,,,,,,,,"Enter URL - https://accounts.creatio.com/login/alm and Navigate to the 
+creatio application. ",,User should be able to navigate to the Creatio application. ,,
+,,,,,,,,,,,,,Verify the cookies consent pop-up is getting displayed. ,,Cookies consent pop-up should be displayed successfully. ,,
+,,,,,,,,,,,,,Verify the cookies consent pop-up should have a {Show Details} link. ,,Cookies consent pop-up should have a {Show Details} link. ,,
+,,,,,,,,,,,,,Click on the {Show Details} link. ,,"Once a user clicks on the {Show Details} link, the cookies consent pop-up 
+should be displayed in the expanded view with all the necessary details. ",,

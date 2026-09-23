@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QA Requirement Analysis & Test Plan Report - CRM-12</title>
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #1e3a8a;
+      --success: #10b981;
+      --success-dark: #065f46;
+      --warning: #f59e0b;
+      --warning-dark: #92400e;
+      --danger: #ef4444;
+      --danger-dark: #991b1b;
+      --slate-900: #0f172a;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --white: #ffffff;
+      --shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(180deg, #eef4ff 0%, #f8fafc 100%);
+      color: var(--slate-900);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: var(--white);
+      border-radius: 18px;
+      padding: 28px 26px;
+      box-shadow: var(--shadow);
+      margin-bottom: 26px;
+    }
+
+    .report-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 0 0 8px;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      font-size: 0.98rem;
+      opacity: 0.9;
+      margin: 0;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .meta-item {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .meta-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 4px;
+    }
+
+    .meta-value {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .metric-card {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--slate-200);
+      padding: 20px 18px;
+    }
+
+    .metric-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .metric-title {
+      color: var(--slate-500);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .metric-icon {
+      border-radius: 10px;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      font-weight: 700;
+      background: rgba(59,130,246,0.12);
+      color: var(--primary-dark);
+    }
+
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 0;
+      letter-spacing: -0.03em;
+    }
+
+    .metric-detail {
+      color: var(--slate-600);
+      font-size: 0.82rem;
+      margin-top: 8px;
+    }
+
+    section {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 24px 22px;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 1.35rem;
+      color: var(--slate-900);
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      margin: 0 0 12px;
+      font-size: 1.05rem;
+      color: var(--primary-dark);
+    }
+
+    p, li {
+      color: var(--slate-700);
+      line-height: 1.7;
+      margin: 0 0 10px;
+    }
+
+    ul, ol {
+      margin: 8px 0 0 20px;
+      padding: 0;
+    }
+
+    .jira-original-content {
+      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+      border: 1px solid var(--slate-200);
+      border-left: 5px solid var(--primary);
+      border-radius: 14px;
+      padding: 18px 18px 8px;
+      overflow: auto;
+    }
+
+    .jira-original-content * {
+      color: var(--slate-800);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+    }
+
+    .badge-critical { background: rgba(239,68,68,0.12); color: var(--danger-dark); border-color: rgba(239,68,68,0.18); }
+    .badge-high { background: rgba(245,158,11,0.12); color: var(--warning-dark); border-color: rgba(245,158,11,0.18); }
+    .badge-medium { background: rgba(59,130,246,0.12); color: var(--primary-dark); border-color: rgba(59,130,246,0.18); }
+    .badge-low { background: rgba(16,185,129,0.12); color: var(--success-dark); border-color: rgba(16,185,129,0.18); }
+    .badge-covered { background: rgba(16,185,129,0.12); color: var(--success-dark); border-color: rgba(16,185,129,0.2); }
+    .badge-partial { background: rgba(245,158,11,0.12); color: var(--warning-dark); border-color: rgba(245,158,11,0.2); }
+    .badge-gap { background: rgba(239,68,68,0.12); color: var(--danger-dark); border-color: rgba(239,68,68,0.2); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      background: var(--white);
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    th, td {
+      padding: 12px 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--slate-200);
+      vertical-align: top;
+      font-size: 0.92rem;
+    }
+
+    th {
+      background: #eff6ff;
+      color: var(--primary-dark);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-size: 0.72rem;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    tbody tr:hover {
+      background: #eef6ff;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--slate-100);
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .nospace { margin: 0; }
+
+    @media (max-width: 700px) {
+      .container { padding: 18px 14px 26px; }
+      .header { padding: 22px 18px; }
+      .report-title { font-size: 1.55rem; }
+      th, td { font-size: 0.84rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="report-title">QA Requirement Analysis & Test Plan Report</h1>
+      <p class="subtitle">Story assessment, functional risk review, and test coverage planning for CRM-12</p>
+
+      <div class="meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Story Key</span>
+          <span class="meta-value">CRM-12</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Issue Type</span>
+          <span class="meta-value">Story</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">To Do</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Priority</span>
+          <span class="meta-value">Medium</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Assignee</span>
+          <span class="meta-value">Unassigned</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Reporter</span>
+          <span class="meta-value">Bharath Tech Academy</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Generated</span>
+          <span class="meta-value">2026-09-23 00:00:00</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="summary-grid">
+      <div class="metric-card">
+        <div class="metric-top">
+          <div class="metric-title">Total Scenarios</div>
+          <div class="metric-icon">✓</div>
+        </div>
+        <p class="metric-value">15</p>
+        <div class="metric-detail">Across happy path, negative, edge, and validation flows</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-top">
+          <div class="metric-title">Coverage %</div>
+          <div class="metric-icon">% </div>
+        </div>
+        <p class="metric-value">86%</p>
+        <div class="metric-detail">Functional requirements coverage based on current story scope</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-top">
+          <div class="metric-title">High / Critical</div>
+          <div class="metric-icon">!</div>
+        </div>
+        <p class="metric-value">6</p>
+        <div class="metric-detail">Critical path and security-related scenarios identified</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-top">
+          <div class="metric-title">Open Questions</div>
+          <div class="metric-icon">?</div>
+        </div>
+        <p class="metric-value">5</p>
+        <div class="metric-detail">Missing validation, UX, and SSO behavior details</div>
+      </div>
+    </div>
+
+    <section>
+      <h2>Original Jira Story</h2>
+      <div class="jira-original-content">
+        <p><b>Description:</b> As an existing user, I want to log in to my Creatio CRM account using my business email and password through a secure and well-designed form.</p>
+
+        <p><b>Acceptance Criteria:</b></p>
+
+        <p>ü  The form should have a header with the title "LOG IN TO YOUR ACCOUNT".</p>
+
+        <p>ü  Fields required for login include " Business email" , " Password" textboxes along with label on top of each textbox and ‘LOG IN’ button.</p>
+
+        <p>ü  Password textbox should have ‘eye’ icon to display the password entered in textbox</p>
+
+        <p>ü  Provide "Forgot password" link to reset the password on top of Password textbox</p>
+
+        <p>ü  Below ‘LOG IN’ button add label ‘or log in using’ to login with other options</p>
+
+        <p>ü  LinkedIn, Google, and Facebook logo’s should be added as icons with hyperlink below ‘LOG IN’ button along with labels.</p>
+
+        <p>ü  Below social media icons add label ‘Don’t have an account?’ to create new account</p>
+
+        <p>ü  Add ‘SIGN UP’ link to create new account below the label ‘Don’t have an account?’</p>
+
+        <p>ü  Add ‘cookie settings’ icon without label to change consent at the bottom left corner to view, withdraw, change cookie consent settings.</p>
+
+        <p>ü  Add ‘creatio chatbot’ icon without label to help customers FAQ’s at the bottom right corner.</p>
+
+        <p><span class="image-wrap" style=""><img src="https://bharathtechacademy35.atlassian.net/rest/api/3/attachment/content/10003" alt="image-20260914-042415.png" width="700" style="border: 0px solid black" /></span></p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Detailed Requirement Analysis</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>Story Objective & Business Goals</h3>
+          <p>The story aims to allow an existing Creatio CRM customer to sign in with a business email and password through a secure, polished form. The user experience is expected to support both standard credential login and alternate SSO choices, while preserving account creation and privacy management controls.</p>
+          <p><strong>Primary personas:</strong> Existing business customers, sales/operations users, and returning users who are already registered within the Creatio CRM ecosystem.</p>
+          <p><strong>Business value:</strong> reduces friction for returning users, offers trust-building UX elements, supports conversion to account creation, and provides quick access to support or consent management.</p>
+        </div>
+        <div class="card">
+          <h3>Business Scope & User Workflow</h3>
+          <ul>
+            <li>User lands on the login screen.</li>
+            <li>User enters business email and password.</li>
+            <li>User optionally reveals the password using an eye icon.</li>
+            <li>User accesses password recovery via forgot password.</li>
+            <li>User clicks login using credentials or social identity providers.</li>
+            <li>If no account exists, entry to sign-up flow is available.</li>
+            <li>User can manage cookie settings and access FAQ chatbot.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Business Rules & Functional Logic</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>Core Rules</h3>
+          <ul>
+            <li>Business email and password are the primary login inputs.</li>
+            <li>The login form must include a header titled “LOG IN TO YOUR ACCOUNT”.</li>
+            <li>Each field must include an explicit label placed above the control.</li>
+            <li>The password field must allow visibility toggling with an eye icon.</li>
+            <li>Forgot password must be placed above the password field.</li>
+            <li>Social sign-in options appear under the main login action.</li>
+            <li>New account registration must be available from the login page.</li>
+            <li>Cookie settings and chatbot controls must remain visible without obstructing core login actions.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Conditional Logic / State Behavior</h3>
+          <ul>
+            <li>If the user enters valid credentials, they proceed to authenticated access.</li>
+            <li>If the password is hidden, the eye icon toggles to reveal the value.</li>
+            <li>If the user chooses social login, they are routed to the linked provider identity flow.</li>
+            <li>If the user does not have an account, the sign-up link leads to registration.</li>
+            <li>If the user requests password reset, they proceed to forgot-password workflow.</li>
+            <li>If the user clicks cookie settings, they can view/update consent preferences.</li>
+            <li>If the user opens FAQ assistance, chatbot should provide support or navigation to FAQ topics.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Inputs, Outputs, Validations & Error Handling</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>Expected Inputs</h3>
+          <ul>
+            <li>Business email: required, likely in email format, must match a corporate or business domain pattern.</li>
+            <li>Password: required, masked by default, hidden text toggled by eye icon.</li>
+            <li>Social provider selection: LinkedIn, Google, Facebook as clickable icon links.</li>
+            <li>Consent toggles for cookies: view, withdraw, change consent settings.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Likely Validation & Error Handling</h3>
+          <ul>
+            <li>Incomplete email or password should prevent login action and show a clear validation message.</li>
+            <li>Invalid email format should trigger inline validation or server-side rejection.</li>
+            <li>Incorrect credentials should display a generic authentication failure message.</li>
+            <li>Rate limiting or account lockout should be handled gracefully without exposing sensitive account state.</li>
+            <li>Failed social login should return to the login page with a recoverable error state.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Edge Cases & Alternate Flows</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>Negative and Boundary Scenarios</h3>
+          <ul>
+            <li>Empty email and password fields.</li>
+            <li>Malformed email with spaces, Unicode, or unsupported domain syntax.</li>
+            <li>Minimum/maximum password length not defined by story and must be clarified.</li>
+            <li>Password visibility toggled while field contains special characters or long values.</li>
+            <li>Cross-site scripting payloads in email or password fields.</li>
+            <li>Session timeout or stale auth token on return to login.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Alternate Flows</h3>
+          <ul>
+            <li>Reset password via forgot-password.</li>
+            <li>Social login via LinkedIn, Google, or Facebook.</li>
+            <li>Sign-up route from the login page.</li>
+            <li>Cookie consent management from floating icon.</li>
+            <li>Chatbot assistance access from floating icon.</li>
+            <li>Back button behavior after authentication or after password reset.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Assumptions & Open Questions</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>Assumptions by QA</h3>
+          <ul>
+            <li>The login form is a front-end page integrated with the authentication service.</li>
+            <li>Passwords are masked by default and must be toggleable without losing entered content.</li>
+            <li>The social media icons are static links to provider-based sign-in flows.</li>
+            <li>Cookie settings and chatbot icons are floating UI elements that do not prevent login usability.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Open Questions for PO / BA / Tech Lead</h3>
+          <ul>
+            <li>What are the exact validation rules for business email format and password policy?</li>
+            <li>Should social login be fully functional OAuth or placeholder links for this story?</li>
+            <li>What should happen after clicking Forgot Password: redirect to a reset page or a modal?</li>
+            <li>Is the cookie settings feature required to be a full consent management workflow or just a persistent settings entry point?</li>
+            <li>Should the chatbot icon navigate to FAQ content, a live support chat, or just a static FAQ page?</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Risks & Dependencies</h2>
+      <div class="card">
+        <ul>
+          <li><strong>Third-party SSO:</strong> LinkedIn, Google, and Facebook integrations must be configured, and failure states need clear handling.</li>
+          <li><strong>Authentication service:</strong> login success/failure responses determine UX and security behavior.</li>
+          <li><strong>Privacy compliance:</strong> cookie settings must align with consent requirements and platform policies.</li>
+          <li><strong>Accessibility:</strong> icons, labels, and focus states must satisfy keyboard and screen-reader expectations.</li>
+          <li><strong>Responsive design:</strong> the floating widgets and form layout must remain usable across desktop, tablet, and mobile viewports.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Functional Test Plan</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>Objectives & Scope</h3>
+          <p><strong>In Scope:</strong> login form layout, validation, password visibility toggle, forgot password link, social login UI, sign-up CTA, cookie settings, chatbot, and responsive behavior.</p>
+          <p><strong>Out of Scope:</strong> backend identity provider configuration, database migration, performance benchmarking, and unrelated CRM modules.</p>
+        </div>
+        <div class="card">
+          <h3>Approach</h3>
+          <p>Cross-browser UI automation via Playwright Page Object Model, with targeted API validation for expected authentication responses and error handling. Positive, negative, boundary, and state/UX validations will be covered.</p>
+        </div>
+      </div>
+      <div class="two-col" style="margin-top: 18px;">
+        <div class="card">
+          <h3>Test Data Strategy</h3>
+          <ul>
+            <li>Valid business email and password for successful login.</li>
+            <li>Invalid email and wrong password for negative tests.</li>
+            <li>Empty field values and long strings for boundary tests.</li>
+            <li>Predefined SSO account personas for LinkedIn, Google, and Facebook.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Environment & Entry/Exit Criteria</h3>
+          <ul>
+            <li><strong>Browsers:</strong> Chromium, Firefox, WebKit.</li>
+            <li><strong>Viewports:</strong> 1920x1080, 768x1024, 375x667.</li>
+            <li><strong>Entry:</strong> Story ready for test, login page available, test data provisioned.</li>
+            <li><strong>Exit:</strong> all scenarios executed, no open critical/high defects, RTM completed.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Functional Test Scenarios</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Scenario ID</th>
+            <th>Req / AC Ref</th>
+            <th>Scenario Description</th>
+            <th>Preconditions</th>
+            <th>Test Data</th>
+            <th>Expected Result</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TS_CRM12_001</td>
+            <td>AC-01</td>
+            <td>Verify the login form header appears as “LOG IN TO YOUR ACCOUNT”.</td>
+            <td>User is on login page.</td>
+            <td>Default page load state.</td>
+            <td>Header text matches exact required title and is visible without overlap.</td>
+            <td><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td>TS_CRM12_002</td>
+            <td>AC-02</td>
+            <td>Validate company email and password fields display with labels above them.</td>
+            <td>Login page loaded.</td>
+            <td>Valid email and password values.</td>
+            <td>Business email and password labels are visible and aligned; input controls are functional.</td>
+            <td><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td>TS_CRM12_003</td>
+            <td>AC-02</td>
+            <td>Verify login primary CTA is visible and labeled “LOG IN”.</td>
+            <td>User on login page.</td>
+            <td>Empty form state.</td>
+            <td>Button is clearly visible and appropriately sized; clicking triggers required validation if fields are empty.</td>
+            <td><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td>TS_CRM12_004</td>
+            <td>AC-03</td>
+            <td>Toggle password visibility using the eye icon.</td>
+            <td>Password field has a value entered.</td>
+            <td>Sample password: Pass@123</td>
+            <td>Clicking the eye icon reveals the password; clicking again masks it without clearing value.</td>
+            <td><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td>TS_CRM12_005</td>
+            <td>AC-04</td>
+            <td>Validate forgot password link is displayed above the password field.</td>
+            <td>Login form open.</td>
+            <td>No credentials.</td>
+            <td>Forgot password link is visible, keyboard accessible, and routes to a reset flow.</td>
+            <td><span class="badge badge-medium">Medium</span></td>
+          </tr>
+          <tr>
+            <td>TS_CRM12_006</td>
+            <td>AC-05</td>
+            <td>Check social login option label “or log in using” appears under the login button.</td>
+            <td>Form loaded and fields visible.</td>
+            <td>Any valid state.</td>
+            <td>Label text appears in the correct position and is readable.</td>
+            <td><span class="badge badge-medium">Medium</span></td>
+          </tr>
+          <tr>
+            <td>TS_CRM12_007</td>
+            <td>AC-06</td>
+            <td>Confirm LinkedIn, Google, and Facebook icons are displayed with labels.</td>
+            <td>Login page loaded.</td>
+            <td>Three provider options.</td>
+            <td>All three provider icons render properly and are clickable.</td>
+            <td><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td>TS_CRM12_008</td>
+            <td>AC-06</td>
+            <td>Ensure social provider buttons navigate to the expected SSO flow.</td>
+            <td>User can reach login page and has valid provider access.</td>
+            <td>Google, LinkedIn, Facebook authorized user.</td>
+            <td>Selected provider opens an authentication session or redirect flow without broken links.</td>
+            <td><span class="badge badge-critical">Critical</span></td>
+          </tr>
+          <tr>
+            <td>TS_CRM12_009</td>
+            <td>AC-07</td>
+            <td>Verify sign-up prompt “Don’t have an account?” displays below social icons.</td>
+            <td>Login form loaded.</td>
+            <td>Initial default state.</td>
+            <td>Prompt displays below social login icons with clear spacing and readability.</td>
+            <td><span class="badge badge-medium">Medium</span></td>
+          </tr>
+          <tr>
+            <td>TS_CRM12_010</td>
+            <td>AC-08</td>
+            <td>Confirm “SIGN UP” link routes to the registration page from login page.</td>
+            <td>Login page visible.</td>
+            <td>Unregistered user.</td>
+            <td>Clicking sign-up link opens account creation flow with no broken navigation.</td>
+            <td><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td>TS_CRM12_011</td>
+            <td>AC-09</td>
+            <td>Verify cookie settings icon appears in the bottom-left corner without label.</td>
+            <td>UI loaded on desktop viewport.</td>
+            <td>Default page with consent settings.</td>
+            <td>Floating icon location is correct and click opens consent options.</td>
+            <td><span class="badge badge-medium">Medium</span></td>
+          </tr>
+          <tr>
+            <td>TS_CRM12_012</td>
+            <td>AC-10</td>
+            <td>Verify chatbot icon appears bottom-right and supports FAQ access.</td>
+            <td>Login page loaded.</td>
+            <td>Default page state.</td>
+            <td>Chatbot icon is visible, correctly positioned, and navigates to FAQ or support flow.</td>
+            <td><span class="badge badge-medium">Medium</span></td>
+          </tr>
+          <tr>
+            <td>TS_CRM12_013</td>
+            <td>BR-01</td>
+            <td>Validate invalid email format handling.</td>
+            <td>User has access to login page.</td>
+            <td>test@, invalid@domain, abc@@domain.com</td>
+            <td>System blocks login and shows a clear validation error; no authentication request is sent.</td>
+            <td><span class="badge badge-critical">Critical</span></td>
+          </tr>
+          <tr>
+            <td>TS_CRM12_014</td>
+            <td>BR-02</td>
+            <td>Validate incorrect password handling.</td>
+            <td>Existing user account known.</td>
+            <td>Valid email + wrong password.</td>
+            <td>Login fails with a secure, user-friendly error, and no sensitive backend details are exposed.</td>
+            <td><span class="badge badge-critical">Critical</span></td>
+          </tr>
+          <tr>
+            <td>TS_CRM12_015</td>
+            <td>BR-03</td>
+            <td>Check responsive behavior across desktop, tablet, and mobile layouts.</td>
+            <td>Page open in different viewports.</td>
+            <td>Three viewports: 1920x1080, 768x1024, 375x667</td>
+            <td>All form elements remain visible, accessible, and aligned without clipped content or overlapping controls.</td>
+            <td><span class="badge badge-high">High</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Requirements Traceability Matrix (RTM)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Requirement / AC Ref</th>
+            <th>Acceptance Criteria Description</th>
+            <th>Test Scenario IDs</th>
+            <th>Coverage Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AC-01</td>
+            <td>Header with title “LOG IN TO YOUR ACCOUNT”</td>
+            <td>TS_CRM12_001</td>
+            <td><span class="badge badge-covered">Covered</span></td>
+          </tr>
+          <tr>
+            <td>AC-02</td>
+            <td>Business email, password field, labels, and login button</td>
+            <td>TS_CRM12_002, TS_CRM12_003</td>
+            <td><span class="badge badge-covered">Covered</span></td>
+          </tr>
+          <tr>
+            <td>AC-03</td>
+            <td>Password reveal using eye icon</td>
+            <td>TS_CRM12_004</td>
+            <td><span class="badge badge-covered">Covered</span></td>
+          </tr>
+          <tr>
+            <td>AC-04</td>
+            <td>Forgot password link above password field</td>
+            <td>TS_CRM12_005</td>
+            <td><span class="badge badge-covered">Covered</span></td>
+          </tr>
+          <tr>
+            <td>AC-05</td>
+            <td>Label “or log in using” below login button</td>
+            <td>TS_CRM12_006</td>
+            <td><span class="badge badge-covered">Covered</span></td>
+          </tr>
+          <tr>
+            <td>AC-06</td>
+            <td>LinkedIn, Google, Facebook icons with labels and hyperlinks</td>
+            <td>TS_CRM12_007, TS_CRM12_008</td>
+            <td><span class="badge badge-covered">Covered</span></td>
+          </tr>
+          <tr>
+            <td>AC-07</td>
+            <td>“Don’t have an account?” prompt below social icons</td>
+            <td>TS_CRM12_009</td>
+            <td><span class="badge badge-covered">Covered</span></td>
+          </tr>
+          <tr>
+            <td>AC-08</td>
+            <td>“SIGN UP” link for new account flow</td>
+            <td>TS_CRM12_010</td>
+            <td><span class="badge badge-covered">Covered</span></td>
+          </tr>
+          <tr>
+            <td>AC-09</td>
+            <td>Cookie settings icon in bottom left corner</td>
+            <td>TS_CRM12_011</td>
+            <td><span class="badge badge-covered">Covered</span></td>
+          </tr>
+          <tr>
+            <td>AC-10</td>
+            <td>Chatbot icon in bottom right corner</td>
+            <td>TS_CRM12_012</td>
+            <td><span class="badge badge-covered">Covered</span></td>
+          </tr>
+          <tr>
+            <td>BR-01</td>
+            <td>Invalid email validation</td>
+            <td>TS_CRM12_013</td>
+            <td><span class="badge badge-covered">Covered</span></td>
+          </tr>
+          <tr>
+            <td>BR-02</td>
+            <td>Incorrect credentials handling</td>
+            <td>TS_CRM12_014</td>
+            <td><span class="badge badge-covered">Covered</span></td>
+          </tr>
+          <tr>
+            <td>BR-03</td>
+            <td>Responsive UX for login page</td>
+            <td>TS_CRM12_015</td>
+            <td><span class="badge badge-covered">Covered</span></td>
+          </tr>
+          <tr>
+            <td>BR-04</td>
+            <td>Security validation for XSS / malicious input</td>
+            <td>Gap</td>
+            <td><span class="badge badge-gap">Uncovered / Gap</span></td>
+          </tr>
+          <tr>
+            <td>BR-05</td>
+            <td>Session timeout / stale auth flow</td>
+            <td>Gap</td>
+            <td><span class="badge badge-gap">Uncovered / Gap</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Missing Requirements, Gaps & Final Testing Observations</h2>
+      <div class="card">
+        <ul>
+          <li>The story does not define exact email validation rules, including accepted domain patterns or business-email-only enforcement.</li>
+          <li>No password policy is specified: min/max length, allowed characters, or account lockout thresholds are missing.</li>
+          <li>There is no explicit requirement for inline validation text, error styling, or disabled login state before form validation passes.</li>
+          <li>Exact requirements for social login are unclear: whether they are full SSO integrations or visual placeholders.</li>
+          <li>Forgot password, cookie settings, and chatbot flows are implied but not specified in process detail or success criteria.</li>
+          <li>Accessibility labels and keyboard navigation are not defined but are essential for compliance and UX quality.</li>
+        </ul>
+        <p><strong>QA Recommendation:</strong> request clarification from the PO or product owner on validation rules, social login implementation scope, cookie consent behavior, and chatbot route flow before code sign-off. This will reduce defect risk in the login module and improve testability.</p>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

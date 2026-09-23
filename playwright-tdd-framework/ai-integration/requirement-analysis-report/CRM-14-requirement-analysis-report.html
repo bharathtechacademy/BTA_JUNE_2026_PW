@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QA Requirement Analysis & Test Plan Report - CRM-14</title>
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #1e3a8a;
+      --primary-gradient: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
+      --success: #10b981;
+      --success-dark: #065f46;
+      --warning: #f59e0b;
+      --warning-dark: #92400e;
+      --danger: #ef4444;
+      --danger-dark: #991b1b;
+      --purple: #8b5cf6;
+      --purple-dark: #5b21b6;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --white: #ffffff;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -4px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(180deg, #eef4ff 0%, #f8fafc 100%);
+      color: var(--slate-900);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 36px 24px 60px;
+    }
+
+    .header {
+      background: var(--primary-gradient);
+      color: var(--white);
+      border-radius: 20px;
+      padding: 32px 30px;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::after {
+      content: "";
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 220px;
+      height: 220px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .header-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    .report-title {
+      font-size: 2.15rem;
+      font-weight: 800;
+      margin: 0 0 8px;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      font-size: 1.02rem;
+      opacity: 0.92;
+      margin: 0;
+      max-width: 900px;
+      line-height: 1.5;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .meta-item {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 12px;
+      padding: 12px 16px;
+    }
+
+    .meta-label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.82;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .meta-value {
+      font-weight: 700;
+      font-size: 1.02rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .metric-card {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--slate-200);
+      padding: 22px 20px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .metric-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .metric-title {
+      color: var(--slate-500);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .metric-icon {
+      border-radius: 10px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .icon-blue { background: rgba(59, 130, 246, 0.12); color: var(--primary-dark); }
+    .icon-green { background: rgba(16, 185, 129, 0.12); color: var(--success-dark); }
+    .icon-amber { background: rgba(245, 158, 11, 0.12); color: var(--warning-dark); }
+    .icon-purple { background: rgba(139, 92, 246, 0.12); color: var(--purple-dark); }
+    .icon-red { background: rgba(239, 68, 68, 0.12); color: var(--danger-dark); }
+
+    .metric-value {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin: 0;
+      letter-spacing: -0.03em;
+      color: var(--slate-900);
+    }
+
+    .metric-detail {
+      color: var(--slate-600);
+      font-size: 0.84rem;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    section {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 28px 24px;
+      margin-bottom: 26px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--slate-100);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.4rem;
+      color: var(--slate-900);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    h3 {
+      margin: 0 0 12px;
+      font-size: 1.08rem;
+      color: var(--primary-dark);
+      letter-spacing: -0.01em;
+    }
+
+    p, li {
+      color: var(--slate-700);
+      line-height: 1.7;
+      margin: 0 0 10px;
+      font-size: 0.94rem;
+    }
+
+    ul, ol {
+      margin: 8px 0 0 20px;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .jira-original-content {
+      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+      border: 1px solid var(--slate-200);
+      border-left: 5px solid var(--primary);
+      border-radius: 14px;
+      padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .jira-tag {
+      display: inline-block;
+      background: #eff6ff;
+      color: var(--primary-dark);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .badge-critical { background: rgba(239, 68, 68, 0.12); color: var(--danger-dark); border-color: rgba(239, 68, 68, 0.25); }
+    .badge-high { background: rgba(245, 158, 11, 0.12); color: var(--warning-dark); border-color: rgba(245, 158, 11, 0.25); }
+    .badge-medium { background: rgba(59, 130, 246, 0.12); color: var(--primary-dark); border-color: rgba(59, 130, 246, 0.25); }
+    .badge-low { background: rgba(16, 185, 129, 0.12); color: var(--success-dark); border-color: rgba(16, 185, 129, 0.25); }
+    .badge-covered { background: rgba(16, 185, 129, 0.12); color: var(--success-dark); border-color: rgba(16, 185, 129, 0.25); }
+    .badge-partial { background: rgba(245, 158, 11, 0.12); color: var(--warning-dark); border-color: rgba(245, 158, 11, 0.25); }
+    .badge-gap { background: rgba(239, 68, 68, 0.12); color: var(--danger-dark); border-color: rgba(239, 68, 68, 0.25); }
+
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--slate-200);
+      box-shadow: var(--shadow-sm);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      text-align: left;
+    }
+
+    th, td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--slate-200);
+      vertical-align: top;
+      font-size: 0.92rem;
+    }
+
+    th {
+      background: #eff6ff;
+      color: var(--primary-dark);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 0.74rem;
+      border-bottom: 2px solid #bfdbfe;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    tbody tr:hover {
+      background: #eef6ff;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--slate-100);
+      border: 1px solid var(--slate-200);
+      border-radius: 14px;
+      padding: 20px 22px;
+      height: 100%;
+    }
+
+    .card-highlight {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+
+    .card-warning {
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+
+    .card-danger {
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+
+    .provider-pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 12px 0 16px;
+    }
+
+    .provider-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      border: 1px solid transparent;
+    }
+
+    .pill-google { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+    .pill-linkedin { background: #e0f2fe; color: #075985; border-color: #7dd3fc; }
+    .pill-facebook { background: #dbeafe; color: #1e40af; border-color: #93c5fd; }
+
+    .callout-box {
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin: 16px 0;
+      border-left: 4px solid;
+    }
+
+    .callout-info {
+      background: #eff6ff;
+      border-color: var(--primary);
+      color: var(--slate-800);
+    }
+
+    .callout-warning {
+      background: #fffbeb;
+      border-color: var(--warning);
+      color: var(--slate-800);
+    }
+
+    .callout-danger {
+      background: #fef2f2;
+      border-color: var(--danger);
+      color: var(--slate-800);
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 18px 14px 36px; }
+      .header { padding: 24px 20px; }
+      .report-title { font-size: 1.6rem; }
+      .meta-grid { grid-template-columns: 1fr 1fr; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; }
+      th, td { font-size: 0.84rem; padding: 10px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <span class="header-badge">Lead QA Architecture &amp; Requirement Engineering</span>
+      <h1 class="report-title">QA Requirement Analysis &amp; Test Plan Report</h1>
+      <p class="subtitle">Comprehensive requirement breakdown, functional test architecture, test scenario design, and bidirectional traceability matrix for <strong>CRM-14</strong></p>
+
+      <div class="meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Story Key</span>
+          <span class="meta-value">CRM-14</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Issue Type</span>
+          <span class="meta-value">Story</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">To Do</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Priority</span>
+          <span class="meta-value">Medium</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Reporter</span>
+          <span class="meta-value">Bharath Tech Academy</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Assignee</span>
+          <span class="meta-value">Unassigned</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Generated At</span>
+          <span class="meta-value">2026-09-23 21:26 IST</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Executive Metric Cards -->
+    <div class="summary-grid">
+      <div class="metric-card">
+        <div class="metric-top">
+          <div class="metric-title">Total Scenarios</div>
+          <div class="metric-icon icon-blue">✓</div>
+        </div>
+        <p class="metric-value">20</p>
+        <div class="metric-detail">Covering positive SSO, negative, OAuth security, UI, &amp; edge cases</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-top">
+          <div class="metric-title">Requirements Coverage</div>
+          <div class="metric-icon icon-green">%</div>
+        </div>
+        <p class="metric-value">100%</p>
+        <div class="metric-detail">Complete functional coverage for all 4 story Acceptance Criteria</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-top">
+          <div class="metric-title">High / Critical Tests</div>
+          <div class="metric-icon icon-red">!</div>
+        </div>
+        <p class="metric-value">11</p>
+        <div class="metric-detail">Critical authentication paths, CSRF tokens, &amp; session verification</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-top">
+          <div class="metric-title">Identified Gaps / Risks</div>
+          <div class="metric-icon icon-amber">⚠</div>
+        </div>
+        <p class="metric-value">4</p>
+        <div class="metric-detail">Account linking, email verification, new user provisioning gaps</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-top">
+          <div class="metric-title">Open Questions</div>
+          <div class="metric-icon icon-purple">?</div>
+        </div>
+        <p class="metric-value">5</p>
+        <div class="metric-detail">Clarification items raised for PO, BA, and Security Architect</div>
+      </div>
+    </div>
+
+    <!-- Section 1: Original Jira Story -->
+    <section>
+      <div class="section-header">
+        <h2><span class="section-number">1</span> Original Jira Story (Verbatim)</h2>
+        <span class="badge badge-medium">Jira Source: CRM-14</span>
+      </div>
+      <div class="jira-original-content">
+        <span class="jira-tag">Extracted via Jira REST API v3</span>
+        <p><b>Description:</b> As an existing user, I want to log in using my LinkedIn, Google, or Facebook accounts to quickly access my account without manually entering credentials.</p>
+        <p><b>Acceptance Criteria:</b></p>
+        <p>Social media icons and buttons for LinkedIn, Google, and Facebook should be available with appropriate styling.</p>
+        <p>Clicking a button should redirect to the OAuth authentication flow of the provider.</p>
+        <p>Upon successful authentication, the user should be logged in and redirected to their dashboard.</p>
+        <p>Display error messages for any failures during the login process.</p>
+      </div>
+    </section>
+
+    <!-- Section 2: Detailed Requirement Analysis -->
+    <section>
+      <div class="section-header">
+        <h2><span class="section-number">2</span> Detailed Requirement Analysis</h2>
+        <span class="badge badge-low">Analysis Depth: Comprehensive</span>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <h3>Story Objectives &amp; Business Value</h3>
+          <p><strong>Primary Objective:</strong> Implement single sign-on (SSO) authentication enabling returning and existing users to authenticate with trusted identity providers (LinkedIn, Google, Facebook) seamlessly without manually typing email and password credentials.</p>
+          <p><strong>Business Value &amp; KPIs:</strong></p>
+          <ul>
+            <li><strong>Reduced Login Friction:</strong> Lowers cognitive load and login drop-off rates by enabling one-click or two-click authentication.</li>
+            <li><strong>Reduced Credential Support Overhead:</strong> Minimizes password reset requests, locked accounts, and forgotten credential tickets.</li>
+            <li><strong>Enhanced Security Posture:</strong> Delegates authentication to tier-1 identity providers supporting multi-factor authentication (MFA/2FA) and device risk analysis.</li>
+          </ul>
+          <p><strong>Target Personas:</strong></p>
+          <ul>
+            <li><strong>Existing Corporate User:</strong> Uses Google Workspace or LinkedIn credentials matching their CRM registration.</li>
+            <li><strong>Social / Consumer User:</strong> Uses personal Facebook or Google account.</li>
+            <li><strong>Mobile / Tablet User:</strong> Benefits significantly from touch-based single-tap OAuth flows without keyboard typing.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Business Scope &amp; User Workflows</h3>
+          <p><strong>Supported Identity Providers:</strong></p>
+          <div class="provider-pill-grid">
+            <span class="provider-pill pill-google"><strong>Google</strong> (OAuth 2.0 / OpenID Connect)</span>
+            <span class="provider-pill pill-linkedin"><strong>LinkedIn</strong> (OAuth 2.0 / Sign In with LinkedIn)</span>
+            <span class="provider-pill pill-facebook"><strong>Facebook</strong> (Facebook Login / Graph API)</span>
+          </div>
+          <p><strong>End-to-End User Journey:</strong></p>
+          <ol>
+            <li><strong>Discovery:</strong> User visits the CRM login screen (integrated below the primary login button as defined in CRM-12).</li>
+            <li><strong>Selection:</strong> User clicks their chosen social provider button (e.g., "Sign in with Google").</li>
+            <li><strong>Redirection:</strong> The application generates a secure OAuth state token and redirects to the provider's authorization endpoint.</li>
+            <li><strong>Provider Consent / Login:</strong> User enters credentials (if not already logged into provider) and grants authorization.</li>
+            <li><strong>Callback:</strong> Provider redirects to CRM OAuth callback endpoint with an authorization code and state token.</li>
+            <li><strong>Token Exchange &amp; Session Creation:</strong> CRM backend exchanges the authorization code for tokens, retrieves verified user profile, sets session cookies/JWT, and creates active session.</li>
+            <li><strong>Dashboard Landing:</strong> User lands on the CRM Dashboard with verified authenticated state.</li>
+            <li><strong>Failure / Cancellation Route:</strong> User sees clear, actionable error toast or banner on login page without infinite loops or blank pages.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Business Rules & Functional Logic -->
+    <section>
+      <div class="section-header">
+        <h2><span class="section-number">3</span> Business Rules &amp; Functional Logic</h2>
+        <span class="badge badge-medium">6 Formal Business Rules</span>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <h3>UI Presentation &amp; Provider Branding Rules</h3>
+          <ul>
+            <li><strong>BR-01 (Provider Branding Compliance):</strong> Each social button must strictly follow provider visual identity standards:
+              <ul>
+                <li><em>Google:</em> Neutral white or dark container, official multi-color "G" logo, proper typography ("Sign in with Google").</li>
+                <li><em>LinkedIn:</em> Official LinkedIn Blue background (<code>#0A66C2</code>) with official white "in" glyph.</li>
+                <li><em>Facebook:</em> Official Facebook Blue (<code>#1877F2</code>) with official white "f" glyph.</li>
+              </ul>
+            </li>
+            <li><strong>BR-02 (Interactive State Requirements):</strong> Buttons must have clear hover states, focus outlines for keyboard navigation (Tab/Shift+Tab), active pressed states, and accessible ARIA attributes (e.g., <code>aria-label="Log in with Google"</code>).</li>
+            <li><strong>BR-03 (Layout Position):</strong> Social login options must reside in the dedicated section below the standard login action button, aligned with the CRM-12 layout.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Authentication, Security &amp; State Logic</h3>
+          <ul>
+            <li><strong>BR-04 (OAuth 2.0 Authorization Code Flow):</strong> Authentication must use the Authorization Code Flow with PKCE (Proof Key for Code Exchange) or secure server-side exchange. Client secrets must never be exposed to the browser.</li>
+            <li><strong>BR-05 (CSRF State Protection):</strong> Every OAuth initiation must generate a cryptographically strong, non-guessable <code>state</code> parameter bound to the user's session. The callback must strictly reject mismatched or missing state parameters.</li>
+            <li><strong>BR-06 (Account Binding &amp; Redirection):</strong>
+              <ul>
+                <li>When the OAuth email matches an existing verified CRM user, the account is securely linked and logged in.</li>
+                <li>Upon successful authentication, user is redirected to <code>/dashboard</code> (or the intended protected URI requested prior to login).</li>
+                <li>If the user cancels or denies consent, the callback redirects back to login with a user-friendly failure notice.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Inputs, Outputs, Validations & Error Handling -->
+    <section>
+      <div class="section-header">
+        <h2><span class="section-number">4</span> Inputs, Outputs, Validations &amp; Error Handling</h2>
+        <span class="badge badge-high">Input / Output Specification</span>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <h3>Inputs &amp; Outputs Matrix</h3>
+          <p><strong>User &amp; System Inputs:</strong></p>
+          <ul>
+            <li>User click / activation of Provider Button (Google, LinkedIn, or Facebook).</li>
+            <li>OAuth consent grant or cancellation on provider dialog.</li>
+            <li>Callback query parameters: <code>code</code> (authorization code) and <code>state</code> (CSRF token).</li>
+            <li>Provider error parameters: <code>error=access_denied</code>, <code>error_description</code>.</li>
+          </ul>
+          <p><strong>System Outputs:</strong></p>
+          <ul>
+            <li>Browser redirect to provider OAuth URI with <code>client_id</code>, <code>redirect_uri</code>, <code>response_type=code</code>, <code>scope</code>, and <code>state</code>.</li>
+            <li>Authenticated session tokens (HTTP-only, Secure, SameSite cookies or JWT).</li>
+            <li>Final navigation to <code>/dashboard</code>.</li>
+            <li>User-facing localized error alerts on authentication failure.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Error Scenarios &amp; Messaging Specifications</h3>
+          <div class="callout-box callout-danger" style="margin-top: 0;">
+            <p><strong>User Denied / Cancelled Consent:</strong><br>
+            <em>Condition:</em> User clicks "Cancel" or closes provider authorization modal.<br>
+            <em>Behavior:</em> Returns to <code>/login</code>; Displays: <code>"Social login was cancelled. Please try again or use your email and password."</code></p>
+          </div>
+          <div class="callout-box callout-warning">
+            <p><strong>Mismatched CSRF State Parameter:</strong><br>
+            <em>Condition:</em> Incoming <code>state</code> does not match session store (potential replay or CSRF attack).<br>
+            <em>Behavior:</em> Reject token exchange, log security event; Displays: <code>"Your session has expired or is invalid. Please start the login process again."</code></p>
+          </div>
+          <div class="callout-box callout-info" style="margin-bottom: 0;">
+            <p><strong>Provider Outage / Network Timeout:</strong><br>
+            <em>Condition:</em> Identity provider API fails or returns HTTP 500/503/504.<br>
+            <em>Behavior:</em> Graceful retry prompt; Displays: <code>"Unable to connect to [Provider]. Please try again later or sign in with your email."</code></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Edge Cases & Alternate Flows -->
+    <section>
+      <div class="section-header">
+        <h2><span class="section-number">5</span> Edge Cases &amp; Alternate Flows</h2>
+        <span class="badge badge-medium">Resilience &amp; Boundary Scenarios</span>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <h3>Security &amp; Protocol Edge Cases</h3>
+          <ul>
+            <li><strong>Replay Attack on Authorization Code:</strong> Attempting to reuse an already-exchanged OAuth authorization code must fail with HTTP 400 Bad Request.</li>
+            <li><strong>Unverified Email Address:</strong> Provider returns a profile where <code>email_verified = false</code>. System must prevent automatic account takeover.</li>
+            <li><strong>Missing Public Email Permission:</strong> Facebook or LinkedIn user restricts email scope permission. Application must prompt user that email is required for CRM account association.</li>
+            <li><strong>Rapid Multi-Clicking:</strong> User rapidly double-clicks provider button. System must debounce to prevent spawning duplicate OAuth requests.</li>
+            <li><strong>Session Inactivity during Provider Login:</strong> User stays on Google login page for 30 minutes before completing. System must handle stale session gracefully.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>User Experience &amp; Alternate Flows</h3>
+          <ul>
+            <li><strong>Deep Linking / Relay State:</strong> User attempts to visit <code>/contacts/create</code>, gets redirected to login, uses Google Login, and is correctly redirected to <code>/contacts/create</code> instead of default dashboard.</li>
+            <li><strong>Browser Back Button during Redirect:</strong> User hits browser back button after being redirected to provider. System should return to stable login page without broken state.</li>
+            <li><strong>Popup Blockers (if popup mode):</strong> If OAuth opens in popup and is blocked by browser, app should fall back gracefully to full-page redirect or display prompt.</li>
+            <li><strong>Responsive Viewports &amp; Touch Targets:</strong> On mobile devices (375px width), buttons must maintain minimum 44x44px touch targets without overlapping or truncation.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Assumptions & Open Questions -->
+    <section>
+      <div class="section-header">
+        <h2><span class="section-number">6</span> Assumptions &amp; Open Questions</h2>
+        <span class="badge badge-high">Requires Stakeholder Alignment</span>
+      </div>
+      <div class="two-col">
+        <div class="card card-warning">
+          <h3>Assumptions Made by QA</h3>
+          <ul>
+            <li><strong>Existing Account Mapping:</strong> QA assumes accounts are mapped primary by verified email address returned in the OAuth profile.</li>
+            <li><strong>Full-Page Redirection:</strong> QA assumes the OAuth flow operates via full-page HTTP redirection (standard web flow) rather than in-page popups, unless specified otherwise.</li>
+            <li><strong>Default Landing:</strong> QA assumes successful authentication routes to the standard <code>/dashboard</code> route.</li>
+            <li><strong>Provider Sandboxes:</strong> Staging / QA environments have sandbox OAuth client credentials configured for Google, LinkedIn, and Facebook.</li>
+          </ul>
+        </div>
+        <div class="card card-warning">
+          <h3>Open Questions for PO / Tech Lead</h3>
+          <ol>
+            <li><strong>Unregistered Social Users:</strong> When a user logs in via Google/LinkedIn/Facebook for the first time without an existing CRM account, should the system:
+              <br><em>(A) Auto-create a new CRM account?</em>
+              <br><em>(B) Block login with message "No account found. Please sign up first"?</em>
+              <br><em>(C) Route to sign-up page pre-filled with social profile data?</em>
+            </li>
+            <li><strong>Account Linking Confirmation:</strong> If an existing password user clicks "Sign in with Google" for the first time, should we require one-time password entry to confirm account linking?</li>
+            <li><strong>Requested OAuth Scopes:</strong> What specific scopes are being requested? (Recommended: Google: <code>openid email profile</code>, LinkedIn: <code>openid profile email</code>, Facebook: <code>public_profile, email</code>).</li>
+            <li><strong>Social Account Unlinking:</strong> Where can users view or unlink connected social accounts in their profile settings?</li>
+            <li><strong>Session Lifetime:</strong> Do social login sessions follow the standard CRM session timeout policy (e.g., 30 minutes inactivity) or provider token expiry?</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 7: Risks & Dependencies -->
+    <section>
+      <div class="section-header">
+        <h2><span class="section-number">7</span> Risks &amp; Dependencies</h2>
+        <span class="badge badge-medium">Risk Mitigation Analysis</span>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <h3>External &amp; Technical Dependencies</h3>
+          <ul>
+            <li><strong>Third-Party OAuth Availability:</strong> Dependence on Google Identity, LinkedIn Developer Portal, and Meta Graph API operational uptime.</li>
+            <li><strong>Provider API Versioning &amp; Deprecation:</strong> Identity providers periodically deprecate OAuth endpoints (e.g., Google Sign-In library migration to GIS, LinkedIn v1 to v2/OIDC).</li>
+            <li><strong>OAuth Client Secrets &amp; Redirect URIs:</strong> Accurate configuration of authorized redirect URIs in each provider's developer console for localhost, staging, and production.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Security &amp; Compliance Risks</h3>
+          <ul>
+            <li><strong>Account Takeover via Unverified Email:</strong> Risk of malicious user claiming someone's account using an unverified social identity. Mitigated by enforcing <code>email_verified</code> flag checks.</li>
+            <li><strong>CSRF Token Vulnerability:</strong> Failure to strictly validate <code>state</code> could allow attackers to bind their social account to a victim's session.</li>
+            <li><strong>Brand Guideline Violations:</strong> Rejection or takedown of OAuth credentials if buttons fail Google, LinkedIn, or Meta trademark display rules.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 8: Functional Test Plan -->
+    <section>
+      <div class="section-header">
+        <h2><span class="section-number">8</span> Functional Test Plan</h2>
+        <span class="badge badge-low">Strategy: Playwright POM Automation</span>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <h3>Objectives &amp; In-Scope vs Out-of-Scope</h3>
+          <p><strong>Objectives:</strong> Validate the end-to-end functionality, security, responsiveness, error resilience, and visual compliance of social login integrations across all target browsers and platforms.</p>
+          <p><strong>In-Scope:</strong></p>
+          <ul>
+            <li>Social login button layout, styling, icons, labels, hover/focus states.</li>
+            <li>OAuth authorization URL generation, parameters (client_id, scope, state, redirect_uri).</li>
+            <li>OAuth callback processing, token verification, session creation.</li>
+            <li>Navigation to dashboard and deep-linked routes.</li>
+            <li>Error handling (cancellation, network failure, CSRF mismatch, unlinked user).</li>
+            <li>Cross-browser (Chromium, Firefox, WebKit) and multi-viewport testing.</li>
+          </ul>
+          <p><strong>Out-of-Scope:</strong> Performance stress testing of provider servers, internal backend provider authentication algorithms, biometric authentication on physical devices.</p>
+        </div>
+        <div class="card">
+          <h3>Test Approach, Environment &amp; Criteria</h3>
+          <p><strong>Test Approach:</strong></p>
+          <ul>
+            <li><strong>UI E2E Automation:</strong> Playwright Page Object Model covering UI components, interactions, and full-path navigation.</li>
+            <li><strong>API &amp; Callback Mocking:</strong> Use Playwright <code>page.route()</code> to stub provider callback parameters (simulating <code>access_denied</code>, corrupted <code>state</code>, server 500s) for deterministic testing.</li>
+            <li><strong>Sandbox Account Verification:</strong> Dedicated test accounts on Google Sandbox, LinkedIn Developer App, and Facebook Test Users.</li>
+          </ul>
+          <p><strong>Environment &amp; Browsers:</strong></p>
+          <ul>
+            <li><strong>Browsers:</strong> Chromium, Firefox, WebKit.</li>
+            <li><strong>Viewports:</strong> Desktop (1920x1080), Tablet (768x1024), Mobile (375x667).</li>
+          </ul>
+          <p><strong>Entry &amp; Exit Criteria:</strong></p>
+          <ul>
+            <li><strong>Entry:</strong> CRM login page deployed; OAuth client IDs provisioned; mock routes configured.</li>
+            <li><strong>Exit:</strong> 100% test scenarios executed; 0 Critical/High defects open; 100% RTM coverage.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 9: Comprehensive Functional Test Scenarios -->
+    <section>
+      <div class="section-header">
+        <h2><span class="section-number">9</span> Comprehensive Functional Test Scenarios</h2>
+        <span class="badge badge-low">20 Test Scenarios</span>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Scenario ID</th>
+              <th>Req / AC Ref</th>
+              <th>Scenario Description</th>
+              <th>Preconditions</th>
+              <th>Test Data</th>
+              <th>Expected Result</th>
+              <th>Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>TS_CRM14_001</strong></td>
+              <td>AC-01</td>
+              <td>Verify presence and visibility of LinkedIn, Google, and Facebook social login buttons.</td>
+              <td>User is on the CRM Login page.</td>
+              <td>Default page load state.</td>
+              <td>All three social buttons (LinkedIn, Google, Facebook) are visible, properly aligned, and rendered without layout breaks.</td>
+              <td><span class="badge badge-high">High</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_002</strong></td>
+              <td>AC-01, BR-01</td>
+              <td>Validate brand styling, color schemes, and official icons for each provider.</td>
+              <td>User is on Login page.</td>
+              <td>Inspect CSS and SVG/Image assets.</td>
+              <td>Google button has official "G" logo and styling; LinkedIn has official Blue (<code>#0A66C2</code>) with "in" logo; Facebook has official Blue (<code>#1877F2</code>) with "f" logo.</td>
+              <td><span class="badge badge-high">High</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_003</strong></td>
+              <td>AC-01, BR-02</td>
+              <td>Verify interactive states (hover, focus, active) and keyboard accessibility.</td>
+              <td>Login page open.</td>
+              <td>Tab navigation, Enter / Space key press.</td>
+              <td>Buttons exhibit visible hover state, clear focus outline, and can be activated via keyboard without mouse interaction.</td>
+              <td><span class="badge badge-medium">Medium</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_004</strong></td>
+              <td>AC-02, BR-04</td>
+              <td>Verify clicking Google button redirects to Google OAuth authorization URL with valid query parameters.</td>
+              <td>User on Login page.</td>
+              <td>Click "Google" button.</td>
+              <td>Browser navigates to <code>accounts.google.com/o/oauth2/v2/auth</code> containing valid <code>client_id</code>, <code>redirect_uri</code>, <code>response_type=code</code>, <code>scope</code>, and <code>state</code>.</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_005</strong></td>
+              <td>AC-02, BR-04</td>
+              <td>Verify clicking LinkedIn button redirects to LinkedIn OAuth authorization URL with valid query parameters.</td>
+              <td>User on Login page.</td>
+              <td>Click "LinkedIn" button.</td>
+              <td>Browser navigates to <code>linkedin.com/oauth/v2/authorization</code> containing valid <code>client_id</code>, <code>redirect_uri</code>, <code>response_type=code</code>, <code>scope</code>, and <code>state</code>.</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_006</strong></td>
+              <td>AC-02, BR-04</td>
+              <td>Verify clicking Facebook button redirects to Facebook OAuth dialog with valid query parameters.</td>
+              <td>User on Login page.</td>
+              <td>Click "Facebook" button.</td>
+              <td>Browser navigates to <code>facebook.com/v18.0/dialog/oauth</code> containing valid <code>client_id</code>, <code>redirect_uri</code>, <code>response_type=code</code>, <code>scope</code>, and <code>state</code>.</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_007</strong></td>
+              <td>AC-02, BR-05</td>
+              <td>Validate cryptographic uniqueness and session binding of the OAuth <code>state</code> parameter.</td>
+              <td>Initiate multiple OAuth flows in separate sessions.</td>
+              <td>Inspect generated <code>state</code> query values.</td>
+              <td>Each request generates a distinct, non-sequential cryptographically secure random token stored securely in user session.</td>
+              <td><span class="badge badge-high">High</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_008</strong></td>
+              <td>AC-03, BR-06</td>
+              <td>Verify successful Google OAuth login redirects user to CRM Dashboard.</td>
+              <td>User has active Google account matching CRM registered email.</td>
+              <td>Valid Google credentials, grant consent.</td>
+              <td>OAuth code exchanged, authenticated session established, user lands on <code>/dashboard</code> with user profile loaded.</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_009</strong></td>
+              <td>AC-03, BR-06</td>
+              <td>Verify successful LinkedIn OAuth login redirects user to CRM Dashboard.</td>
+              <td>User has active LinkedIn account matching CRM registered email.</td>
+              <td>Valid LinkedIn credentials, grant consent.</td>
+              <td>OAuth code exchanged, authenticated session established, user lands on <code>/dashboard</code> with user profile loaded.</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_010</strong></td>
+              <td>AC-03, BR-06</td>
+              <td>Verify successful Facebook OAuth login redirects user to CRM Dashboard.</td>
+              <td>User has active Facebook account matching CRM registered email.</td>
+              <td>Valid Facebook credentials, grant consent.</td>
+              <td>OAuth code exchanged, authenticated session established, user lands on <code>/dashboard</code> with user profile loaded.</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_011</strong></td>
+              <td>AC-03</td>
+              <td>Verify user profile information (Name, Avatar, Email) is populated on dashboard after social login.</td>
+              <td>Successful social login completed.</td>
+              <td>OAuth user with profile picture and full name.</td>
+              <td>CRM dashboard header displays user's full name and profile avatar sourced from the identity provider.</td>
+              <td><span class="badge badge-medium">Medium</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_012</strong></td>
+              <td>AC-03</td>
+              <td>Verify deep-link redirection after social login (RelayState / return URL preservation).</td>
+              <td>Unauthenticated user attempts direct access to <code>/contacts/list</code>.</td>
+              <td>Redirected to login, authenticates via Google.</td>
+              <td>After successful OAuth exchange, user is routed directly to <code>/contacts/list</code> rather than the default dashboard.</td>
+              <td><span class="badge badge-high">High</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_013</strong></td>
+              <td>AC-04, BR-06</td>
+              <td>Verify error message display when user cancels / denies consent on OAuth provider page.</td>
+              <td>User redirected to provider authorization page.</td>
+              <td>Click "Cancel" / "Deny Access" (callback: <code>error=access_denied</code>).</td>
+              <td>Redirects back to login page; displays user-friendly banner: "Social login was cancelled. Please try again or use your password."</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_014</strong></td>
+              <td>AC-04</td>
+              <td>Verify error message display when OAuth provider server returns an HTTP 500 error or network timeout.</td>
+              <td>OAuth exchange endpoint simulates server failure.</td>
+              <td>Mock HTTP 500 / 504 on token exchange.</td>
+              <td>Application does not crash; displays: "Unable to connect to [Provider]. Please try again later or sign in with your email."</td>
+              <td><span class="badge badge-high">High</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_015</strong></td>
+              <td>AC-04, BR-05</td>
+              <td>Verify CSRF security rejection when callback <code>state</code> parameter is invalid or mismatched.</td>
+              <td>Attacker tampers with callback URL.</td>
+              <td>Callback with modified <code>state=tampered_value</code>.</td>
+              <td>Token exchange is blocked; session rejected; displays: "Your session has expired or is invalid. Please start the login process again."</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_016</strong></td>
+              <td>AC-04</td>
+              <td>Verify error handling when provider returns unverified email address (<code>email_verified=false</code>).</td>
+              <td>Social account with unverified email.</td>
+              <td>Mock provider profile with <code>email_verified: false</code>.</td>
+              <td>Login is prevented; displays: "The email associated with this social account is not verified. Please verify your email with the provider."</td>
+              <td><span class="badge badge-high">High</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_017</strong></td>
+              <td>AC-04</td>
+              <td>Verify error handling when social account matches a suspended / deactivated CRM account.</td>
+              <td>User account marked inactive in CRM database.</td>
+              <td>Authenticate with deactivated account's email.</td>
+              <td>Login rejected; displays: "Your account has been deactivated. Please contact your system administrator."</td>
+              <td><span class="badge badge-high">High</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_018</strong></td>
+              <td>BR-06</td>
+              <td>Verify existing account linking when social login email matches an existing password-based account.</td>
+              <td>CRM account exists with <code>user@company.com</code>.</td>
+              <td>Log in via Google with same <code>user@company.com</code>.</td>
+              <td>Accounts successfully linked; user logged in seamlessly into existing account with historic data preserved.</td>
+              <td><span class="badge badge-high">High</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_019</strong></td>
+              <td>BR-02</td>
+              <td>Verify debounce protection against rapid consecutive clicks on social login buttons.</td>
+              <td>User on Login page.</td>
+              <td>Rapid multiple clicks (5x) on LinkedIn button.</td>
+              <td>Only a single OAuth initiation occurs; button enters loading/disabled state; no duplicate authorization requests spawned.</td>
+              <td><span class="badge badge-medium">Medium</span></td>
+            </tr>
+            <tr>
+              <td><strong>TS_CRM14_020</strong></td>
+              <td>AC-01</td>
+              <td>Verify responsive layout, button wrap, and touch targets across Desktop, Tablet, and Mobile viewports.</td>
+              <td>Test on 1920x1080, 768x1024, and 375x667.</td>
+              <td>Resize viewport / mobile emulation.</td>
+              <td>Buttons adapt gracefully without text truncation or overflow; mobile touch target height >= 44px; fully usable across devices.</td>
+              <td><span class="badge badge-medium">Medium</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 10: Requirements Traceability Matrix (RTM) -->
+    <section>
+      <div class="section-header">
+        <h2><span class="section-number">10</span> Requirements Traceability Matrix (RTM)</h2>
+        <span class="badge badge-covered">100% AC Coverage</span>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Requirement / AC Ref</th>
+              <th>Requirement / Rule Description</th>
+              <th>Mapped Test Scenario IDs</th>
+              <th>Coverage Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>AC-01</strong></td>
+              <td>Social media icons and buttons for LinkedIn, Google, and Facebook available with appropriate styling.</td>
+              <td>TS_CRM14_001, TS_CRM14_002, TS_CRM14_003, TS_CRM14_020</td>
+              <td><span class="badge badge-covered">Covered</span></td>
+            </tr>
+            <tr>
+              <td><strong>AC-02</strong></td>
+              <td>Clicking a button should redirect to the OAuth authentication flow of the provider.</td>
+              <td>TS_CRM14_004, TS_CRM14_005, TS_CRM14_006, TS_CRM14_007</td>
+              <td><span class="badge badge-covered">Covered</span></td>
+            </tr>
+            <tr>
+              <td><strong>AC-03</strong></td>
+              <td>Upon successful authentication, user logged in and redirected to their dashboard.</td>
+              <td>TS_CRM14_008, TS_CRM14_009, TS_CRM14_010, TS_CRM14_011, TS_CRM14_012</td>
+              <td><span class="badge badge-covered">Covered</span></td>
+            </tr>
+            <tr>
+              <td><strong>AC-04</strong></td>
+              <td>Display error messages for any failures during the login process.</td>
+              <td>TS_CRM14_013, TS_CRM14_014, TS_CRM14_015, TS_CRM14_016, TS_CRM14_017</td>
+              <td><span class="badge badge-covered">Covered</span></td>
+            </tr>
+            <tr>
+              <td><strong>BR-01</strong></td>
+              <td>Provider Branding &amp; Visual Identity Compliance (Google, LinkedIn, Facebook).</td>
+              <td>TS_CRM14_002</td>
+              <td><span class="badge badge-covered">Covered</span></td>
+            </tr>
+            <tr>
+              <td><strong>BR-02</strong></td>
+              <td>Interactive button states, keyboard accessibility, and rapid-click debounce protection.</td>
+              <td>TS_CRM14_003, TS_CRM14_019</td>
+              <td><span class="badge badge-covered">Covered</span></td>
+            </tr>
+            <tr>
+              <td><strong>BR-04</strong></td>
+              <td>OAuth 2.0 Authorization Code Flow query parameter integrity.</td>
+              <td>TS_CRM14_004, TS_CRM14_005, TS_CRM14_006</td>
+              <td><span class="badge badge-covered">Covered</span></td>
+            </tr>
+            <tr>
+              <td><strong>BR-05</strong></td>
+              <td>Cryptographic CSRF <code>state</code> token validation &amp; tamper prevention.</td>
+              <td>TS_CRM14_007, TS_CRM14_015</td>
+              <td><span class="badge badge-covered">Covered</span></td>
+            </tr>
+            <tr>
+              <td><strong>BR-06</strong></td>
+              <td>Account binding, session creation, and deep-link destination redirection.</td>
+              <td>TS_CRM14_008, TS_CRM14_009, TS_CRM14_010, TS_CRM14_012, TS_CRM14_018</td>
+              <td><span class="badge badge-covered">Covered</span></td>
+            </tr>
+            <tr>
+              <td><strong>GAP-01</strong></td>
+              <td>New User Auto-Provisioning vs. Registration Gate Policy for unregistered social accounts.</td>
+              <td>Uncovered (Pending PO Decision)</td>
+              <td><span class="badge badge-gap">Uncovered / Gap</span></td>
+            </tr>
+            <tr>
+              <td><strong>GAP-02</strong></td>
+              <td>Social Account Unlinking and Multi-Provider Management in User Profile.</td>
+              <td>Uncovered (Future Scope)</td>
+              <td><span class="badge badge-gap">Uncovered / Gap</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 11: Missing Requirements, Gaps & Testing Observations -->
+    <section>
+      <div class="section-header">
+        <h2><span class="section-number">11</span> Missing Requirements, Gaps &amp; Final QA Observations</h2>
+        <span class="badge badge-high">QA Sprint Recommendations</span>
+      </div>
+      <div class="card card-warning" style="margin-bottom: 16px;">
+        <h3>Identified Specification Gaps</h3>
+        <ul>
+          <li><strong>G-01: Behavior for Unregistered Social Users:</strong> The acceptance criteria do not define what happens when a user attempts social login with an email not yet registered in the CRM. The team must confirm whether to auto-provision an account or redirect to registration.</li>
+          <li><strong>G-02: Missing Email Scope Permission:</strong> If a user selectively unchecks the email permission on Facebook or LinkedIn consent dialog, the CRM cannot map the account. A dedicated error state or permission retry prompt must be specified.</li>
+          <li><strong>G-03: Multiple Social Accounts with Different Emails:</strong> If a user has a Google account with <code>alice@gmail.com</code> and a LinkedIn account with <code>alice@work.com</code>, they will create two distinct accounts unless a manual account merging feature is supported.</li>
+          <li><strong>G-04: Session Expiration &amp; Token Refresh:</strong> The story does not document token refresh mechanics or whether CRM session expiry is decoupled from third-party OAuth token expiration.</li>
+        </ul>
+      </div>
+
+      <div class="card card-highlight">
+        <h3>QA Architecture Recommendations for Sprint Delivery</h3>
+        <ol>
+          <li><strong>Incorporate Mock OAuth Fixtures in Playwright:</strong> Since testing live third-party OAuth login screens in CI/CD triggers CAPTCHAs, bot blocks, and MFA, the automation framework should implement Playwright network route mocking (<code>page.route('**/oauth/callback*', ...)</code>) for automated test suites, reserving live credentials for staging smoke tests.</li>
+          <li><strong>Enforce Explicit Branding Checks:</strong> Verify that official SVG vector assets are utilized rather than raster images to prevent blurry icons on high-DPI (Retina) screens.</li>
+          <li><strong>Security Review on Token Handling:</strong> Ensure authorization codes and tokens are strictly exchanged over HTTPS, and that sensitive session cookies are flagged with <code>HttpOnly</code>, <code>Secure</code>, and <code>SameSite=Lax</code>.</li>
+        </ol>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

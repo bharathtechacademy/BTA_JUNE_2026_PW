@@ -47,3 +47,12 @@ MCP is all about model context protocol. =>
 MCP is a standard communication protocol that allows a model to connect with external tools and use them. 
 
 Navigate to www.playwright.dev ==> await page.goto("www.playwright.dev")
+
+
+## Agent 
+
+An AI agent is a file that contains a set of instructions to intelligently understand the goal and make a decision based on the available information. It is also going to use tools, data sources, and applications to perform all the actions automatically, and finally, it is going to return the result to the user. 
+
+## RAG  (Retrieval-augmented generation )
+
+RAG is all about. It's one of the AI architectures that is going to combine the relevant data from the documents, databases, and websites, plus the LLM, which is already trained with huge content from the internet. 
