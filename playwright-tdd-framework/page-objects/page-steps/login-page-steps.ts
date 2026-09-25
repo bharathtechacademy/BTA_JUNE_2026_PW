@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { Page, expect } from "@playwright/test";
 import loginPage from '../page-elements/login-page-elements.json' with{type: 'json'};
 import { WebCommons } from "../../commons/ui/web-commons.js";
 import config from '../../config/config.json' with {type: 'json'};
@@ -20,6 +20,32 @@ export class LoginPageSteps {
     //Method to verify login page is displayed 
     async verifyLoginPageIsDisplayed() {
         await this.web.isElementVisible(loginPage.loginPageHeader);
+    }
+
+    // Method to verify login page header text
+    async verifyLoginPageHeaderText(expectedHeader: string) {
+        const headerText: string = await this.web.getText(loginPage.loginPageHeader);
+        await this.web.compareText(headerText, expectedHeader);
+    }
+
+    // Method to verify business email field is displayed
+    async verifyBusinessEmailFieldIsDisplayed() {
+        await this.web.isElementVisible(loginPage.businessEmailTextBox);
+    }
+
+    // Method to verify password field is displayed
+    async verifyPasswordFieldIsDisplayed() {
+        await this.web.isElementVisible(loginPage.passwordTextBox);
+    }
+
+    // Method to verify login button is displayed
+    async verifyLoginButtonIsDisplayed() {
+        await this.web.isElementVisible(loginPage.loginButton);
+    }
+
+    // Method to verify alternative login label is displayed
+    async verifyAlternativeLoginLabelIsDisplayed() {
+        await this.web.isElementVisible(loginPage.orLogInUsingLabel);
     }
 
     //Method to enter username and password 
@@ -54,6 +80,24 @@ export class LoginPageSteps {
     async verifySocialMediaLoginButtonsAreDisplayed() {
         await this.web.isElementVisible(loginPage.googleIcon);
         await this.web.isElementVisible(loginPage.linkedInIcon);
+        const isFacebookVisible = await this.page.locator(loginPage.facebookIcon).first().isVisible();
+        await expect(isFacebookVisible).toBeTruthy();
+    }
+
+    // Method to verify sign-up prompt section is displayed
+    async verifySignUpSectionIsDisplayed() {
+        await this.web.isElementVisible(loginPage.dontHaveAnAccountLabel);
+        await this.web.isElementVisible(loginPage.signUpLink);
+    }
+
+    // Method to verify cookie settings icon is visible
+    async verifyCookieSettingsIconIsDisplayed() {
+        await this.web.isElementVisible(loginPage.cookieSettingsIcon);
+    }
+
+    // Method to verify chatbot icon is visible
+    async verifyChatbotIconIsDisplayed() {
+        await this.web.isElementVisible(loginPage.chatbotIcon);
     }
 
     //Method to verify login error message is displayed

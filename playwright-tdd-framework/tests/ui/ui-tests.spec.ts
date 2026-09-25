@@ -105,4 +105,21 @@ test.describe('Creatio CRM UI Tests', () => {
         });
     }
 
+    // Test Case 11 : CRM-T11 - Verify login form UI layout and mandatory elements.
+    test('CRM-T11: Verify login form UI layout and mandatory elements', async () => {
+        await loginPage.launchApplication();
+        await cookiesPage.verifyCookiesPopUpIsDisplayed();
+        await cookiesPage.clickOnSelectionButton('Allow All');
+        await cookiesPage.verifyCookiesPopUpIsDisappeared();
+        await loginPage.verifyLoginPageHeaderText('LOG IN TO YOUR ACCOUNT');
+        await loginPage.verifyBusinessEmailFieldIsDisplayed();
+        await loginPage.verifyPasswordFieldIsDisplayed();
+        await loginPage.verifyLoginButtonIsDisplayed();
+        await loginPage.verifyAlternativeLoginLabelIsDisplayed();
+        await loginPage.verifySocialMediaLoginButtonsAreDisplayed();
+        await loginPage.verifySignUpSectionIsDisplayed();
+        await loginPage.verifyCookieSettingsIconIsDisplayed();
+        await loginPage.verifyChatbotIconIsDisplayed();
+    });
+
 });
